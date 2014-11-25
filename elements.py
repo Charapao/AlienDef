@@ -13,10 +13,20 @@ class Ball(object):
 #########################################
 class Player(object):
 
-    def __init__(self, pos, color, width=100):
+    def __init__(self, pos, color, startangle, width=100):
         self.width = width
-        self.pos = pos
+        # (self.x,self.y) = pos
         self.color = color
+        self.image = pygame.image.load("cannon.png")
+        self.original = self.image
+        self.pos =pos
+        self.rotate(startangle)
+
+    def rotate(self, angle):
+     	self.image = pygame.transform.rotate(self.original, angle)
+    
+    def render(self,surface):
+    	surface.blit(self.image, self.pos)
 
         
 
