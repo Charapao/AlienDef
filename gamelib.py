@@ -23,13 +23,16 @@ class SimpleGame(object):
         self.font = pygame.font.SysFont("monospace", 20)
 
     def __handle_events(self):
+        self.mouse = ((0,0), 0, 0, 0, 0, 0, 0)
         for event in pygame.event.get():
             if event.type == QUIT:
                 self.terminate()
             elif event.type == KEYDOWN:
                 self.on_key_down(event.key)
-            elif event.type ==KEYUP:
+            elif event.type == KEYUP:
                 self.on_key_up(event.key)
+            elif event.type == pygame.MOUSEMOTION:
+                self.Get_Mouse = event.pos
 
     def terminate(self):
         self.is_terminated = True
