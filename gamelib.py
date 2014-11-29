@@ -14,8 +14,8 @@ class SimpleGame(object):
         self.window_size = window_size
         self.fps = fps
         self.background_color = background_color
-        self.count = 0
-        self.Sizeof_Bullet = 180
+        self.countofbullet = 0
+        self.Sizeof_Bullet = 1000
         self.is_terminated = False
 
     def __game_init(self):
@@ -39,13 +39,11 @@ class SimpleGame(object):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.UPDATEROTATE > -60 and self.UPDATEROTATE < 60 :
                     self.isCreateBullet = True
-                    print self.UPDATEROTATE
-                    # print math.tan(math.pi/180*(self.UPDATEROTATE))*math.cos(math.pi/180*(self.UPDATEROTATE))
-                    # print math.sin(math.pi/3)
-                    if self.count< self.Sizeof_Bullet :
-                       self.count = self.count + 1
-                    self.FireNow[self.count]= True
-                    bul = Bullet(radius=10,pos=(195,505),angleCheckmouse=self.UPDATEROTATE,speed=(-200*math.sin(math.pi/180*self.UPDATEROTATE),-200*math.cos(math.pi/180*self.UPDATEROTATE)))
+                    # print self.UPDATEROTATE
+                    if self.countofbullet< self.Sizeof_Bullet :
+                       self.countofbullet = self.countofbullet + 1
+                    self.FireNow[self.countofbullet]= True
+                    bul = Bullet(radius=10,pos=(195,505),angleCheckmouse=self.UPDATEROTATE,index = len(self.bullets) - 1,speed=(-200*math.sin(math.pi/180*self.UPDATEROTATE),-200*math.cos(math.pi/180*self.UPDATEROTATE)))
                     self.bullets.append(bul)
                       
                 
