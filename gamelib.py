@@ -15,8 +15,9 @@ class SimpleGame(object):
         self.fps = fps
         self.background_color = background_color
         self.countofbullet = 0
-        self.Sizeof_Bullet = 1000
+        self.Sizeof_Bullet = 10000
         self.is_terminated = False
+        self.Sizeof_Enemy = 1
 
     def __game_init(self):
         pygame.init()
@@ -45,7 +46,7 @@ class SimpleGame(object):
                     self.FireNow[self.countofbullet]= True
                     bul = Bullet(radius=10,pos=(195,505),angleCheckmouse=self.UPDATEROTATE,index = len(self.bullets) - 1,speed=(-200*math.sin(math.pi/180*self.UPDATEROTATE),-200*math.cos(math.pi/180*self.UPDATEROTATE)))
                     self.bullets.append(bul)
-                      
+                    
                 
     def terminate(self):
         self.is_terminated = True
