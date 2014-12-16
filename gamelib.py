@@ -18,6 +18,7 @@ class SimpleGame(object):
         self.Sizeof_Bullet = 10000
         self.is_terminated = False
         self.Sizeof_Enemy = 1
+        
 
     def __game_init(self):
         pygame.init()
@@ -40,7 +41,6 @@ class SimpleGame(object):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.UPDATEROTATE > -60 and self.UPDATEROTATE < 60 :
                     self.isCreateBullet = True
-                    # print self.UPDATEROTATE
                     if self.countofbullet< self.Sizeof_Bullet :
                        self.countofbullet = self.countofbullet + 1
                     self.FireNow[self.countofbullet]= True

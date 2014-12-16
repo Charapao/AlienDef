@@ -36,7 +36,7 @@ class Bullet(object):
 
     def render(self, surface):
         surface.blit(self.image, (self.x,self.y))
-        pygame.draw.rect(surface, pygame.Color('black'), self.bulletrect, 3)
+        # pygame.draw.rect(surface, pygame.Color('black'), self.bulletrect, 3)
 
     def Collision(self, enemyrect):
         if enemyrect.colliderect(self.bulletrect):
@@ -44,7 +44,7 @@ class Bullet(object):
            self.x = -300
            self.y = -300
            self.indexcurrent = self.index
-           # print self.CollisionEnemy
+
            
 
 #########################################
@@ -85,21 +85,25 @@ class Enemy(object):
         self.y += self.speed*delta_t
         self.enemyrect = pygame.Rect(self.x, self.y, 30, 30)
         self.Collision(bulletrect)
-        if self.x < -1000 :
+
+        if self.y < -1000 and self.y>= -800:
+            self.y = -1000
             self.x = -1000
+            
+    def ReturnPosy(self):
+        return self.y
 
     
     def render(self,surface):
         surface.blit(self.image, (self.x,self.y))
-        pygame.draw.rect(surface, pygame.Color('black'), self.enemyrect, 3)
+        # pygame.draw.rect(surface, pygame.Color('black'), self.enemyrect, 3)
 
     def Collision(self, bulletrect):
         if bulletrect.colliderect(self.enemyrect):
-           self.CollisionEnemy = True
            self.x = -1000
            self.y = -1000
-           print self.CollisionEnemy
 
+ 
         
 
 

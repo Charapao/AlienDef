@@ -18,7 +18,7 @@ class SquashGame(gamelib.SimpleGame):
     
     INITROTATE = 90
     def __init__(self):
-        super(SquashGame, self).__init__('Squash', SquashGame.WHITE)
+        super(SquashGame, self).__init__('Squash', SquashGame.GREEN)
         self.player = Player(pos=(180,490),
                              color=SquashGame.GREEN,startangle=self.INITROTATE)
         self.enemy = Enemy(pos =(200,50),speed = 30)
@@ -27,8 +27,6 @@ class SquashGame(gamelib.SimpleGame):
         self.bullets = []
         self.FireNow = []
         self.randomtemp = 0
-        self.randomtemp = 0
-        print self.randomtemp
         self.start_time = time.time()
         self.end_time = 0
         self.end_time_2 = 0
@@ -37,6 +35,9 @@ class SquashGame(gamelib.SimpleGame):
         self.Current_CountofBullet = 0
         self.CollisionEnemy = False
         self.indexcurrent = 0
+        self.counttempp = 0
+        self.counttempp1 = 0
+
         self.enemies.append(Enemy(pos =(40,50),speed = 30))
         for x in range(0,self.Sizeof_Bullet):
             self.FireNow.append(False)
@@ -48,22 +49,12 @@ class SquashGame(gamelib.SimpleGame):
     def update(self):
         self.timetemp = self.timetemp + 1
         self.end_time = time.time()
-        if self.end_time-self.start_time >= 4.0 :
+        if self.end_time-self.start_time >= 2.0 :
             self.start_time=self.end_time
             self.randomtemp = randint(20,380)
-            self.enemies.append(Enemy(pos =(1*self.randomtemp,-20),speed = 30+(0.1)*self.timetemp))
+            self.enemies.append(Enemy(pos =(1*self.randomtemp,-40),speed = 30+(0.1)*self.timetemp))
             self.Sizeof_Enemy = self.Sizeof_Enemy+1
-            # print "kuy"
-            # self.enemies.pop()
-            # print "pop law"
-            # self.enemies.append(Enemy(pos =(1*self.randomtemp,-20),speed = 30+(1)*self.timetemp))
-        # print self.end_time-self.start_time
-
-        
-        # if self.countofbullet == 1:
-             # for x in range(self.Sizeof_Enemy):
-                # self.enemy = Enemy(pos =(40,50),speed = 30)
-                # self.enemies.append(Enemy(pos =(40*self.randomtemp,50*self.randomtemp),speed = 30))
+            
         self.UPDATEROTATE = -self.CHAGNETODEGREE*self.Cal_VectorMouse()
         ### Lock Angle Cannon can rotate
         if self.UPDATEROTATE > -60 and self.UPDATEROTATE < 60 :
@@ -73,17 +64,22 @@ class SquashGame(gamelib.SimpleGame):
            self.Current_CountofBullet = self.countofbullet 
         if self.countofbullet > 0 or self.countofbullet <  self.Current_CountofBullet :
            for x in range(0,self.Current_CountofBullet):
-               # self.bullets[x].update(1./self.fps, self.surface, self.player,self.enemy.enemyrect)
+              
                for i in range(self.Sizeof_Enemy):
                  self.bullets[x].update(1./self.fps, self.surface, self.player,self.enemies[i].enemyrect)
 
         for x in range(0,self.Current_CountofBullet):
-            # self.enemy.update(1./(self.fps*self.Current_CountofBullet),self.bullets[x].bulletrect)
+          
             for j in range(self.Sizeof_Enemy):
                 self.enemies[j].update(1./(self.fps*self.Current_CountofBullet),self.bullets[x].bulletrect)
 
-        # self.enemy.update(1./self.fps,self.bullets.bullet)
+        for x in range(self.Sizeof_Enemy):
+            if self.enemies[x].ReturnPosy() > 530:
+                time.sleep(2)
+                self.terminate()
 
+        self.score = self.score + 3
+        self.render_score() 
 
     def render_score(self):
         self.score_image = self.font.render("Score = %d" % self.score, 0, SquashGame.BLACK)
@@ -94,7 +90,8 @@ class SquashGame(gamelib.SimpleGame):
         self.player.render(surface)
         for x in self.enemies:
             x.render(surface)
-        # self.enemy.render(surface)
+        surface.blit(self.score_image, (10,10))
+
 
     def __handle_events(self):
         super(SquashGame, self).init()
